@@ -213,7 +213,7 @@ class embedding_problem_base {
     vector<vector<int>> &qubit_nbrs, &var_nbrs;
 
     //! distribution over [0, 0xffffffff]
-    uniform_int_distribution<> rand;
+    uniform_int_distribution<unsigned int> rand;
 
     vector<int> var_order_space;
     vector<int> var_order_visited;
@@ -271,9 +271,9 @@ class embedding_problem_base {
     size_t compute_margin() {
         if (num_q == 0) return 0;
         size_t max_degree =
-                std::max_element(begin(var_nbrs), end(var_nbrs),
-                                 [](const vector<int> &a, const vector<int> &b) { return a.size() < b.size(); })
-                        ->size();
+                std::max_element(begin(var_nbrs), end(var_nbrs), [](const vector<int> &a, const vector<int> &b) {
+                    return a.size() < b.size();
+                })->size();
         if (max_degree == 0)
             return num_q;
         else
